@@ -30,7 +30,7 @@ DEPS += -DGIT_COMMIT=\"$(GIT_CUR_COMMIT)\" -DGIT_BRANCH=\"$(GIT_CUR_BRANCH)\"
 
 INCLUDES := -I"./src" \
 			-I"./header"
-			
+
 ifdef WIN32
 INCLUDES += -I$(MINGW_HOME)/include/ddk \
 			-I$(WINPCAP_HOME)/Include
@@ -41,10 +41,10 @@ endif
 ifdef MAC_OS_X
 INCLUDES += -I/usr/include/malloc
 endif
-			
+
 Obj/%.o: src/%.cpp
 	@echo 'Building file: $<'
-	@$(CXX) $(DEPS) $(INCLUDES) $(PCAPPP_BUILD_FLAGS) -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:Obj/%.o=Obj/%.d)" -MT"$(@:Obj/%.o=Obj/%.d)" -o "$@" "$<"
+	@$(CXX) $(DEPS) $(INCLUDES) $(PCAPPP_BUILD_FLAGS) -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:Obj/%.o=Obj/%.d)" -MT"$(@:Obj/%.o=Obj/%.d)" -o "$@" $(PCAPPP_EXTRA_CFLAGS) "$<"
 
 CUR_TARGET := $(notdir $(shell pwd))
 
@@ -65,7 +65,7 @@ Common++.lib: create-directories $(OBJS_FILENAMES)
 	@$(AR) -r "Lib/Release/$(LIB_PREFIX)Common++$(LIB_EXT)" $(OBJS_FILENAMES)
 	@echo 'Finished successfully building: $@'
 	@echo ' '
-	
+
 Common++.debug: create-directories $(OBJS_FILENAMES_DEBUG)
 	@$(AR) -r "Lib/Debug/$(LIB_PREFIX)Common++$(LIB_EXT)" $(OBJS_FILENAMES_DEBUG)
 	@echo 'Finished successfully building: $@'

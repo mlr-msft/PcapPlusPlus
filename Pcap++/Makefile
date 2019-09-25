@@ -43,7 +43,7 @@ INCLUDES := -I"./src" \
 			-I"$(PACKETPP_HOME)/header" \
 			-I"$(LIGHT_PCAPNG_HOME)/include" \
 			-I"$(PCAPPLUSPLUS_HOME)/3rdParty/EndianPortable/include"
-			
+
 ifdef WIN32
 INCLUDES += -I$(MINGW_HOME)/include/ddk \
 			-I$(WINPCAP_HOME)/Include
@@ -68,10 +68,10 @@ endif
 ifdef USE_DPDK
 FLAGS := -msse -msse2 -msse3 -mssse3
 endif
-	
+
 Obj/%.o: src/%.cpp
 	@echo 'Building file: $<'
-	@$(CXX) $(DEPS) $(INCLUDES) $(PCAPPP_BUILD_FLAGS) $(FLAGS) -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:Obj/%.o=Obj/%.d)" -MT"$(@:Obj/%.o=Obj/%.d)" -o "$@" "$<"
+	$(CXX) $(DEPS) $(INCLUDES) $(PCAPPP_BUILD_FLAGS) $(FLAGS) -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:Obj/%.o=Obj/%.d)" -MT"$(@:Obj/%.o=Obj/%.d)" -o "$@" $(PCAPPP_EXTRA_CFLAGS) "$<"
 
 CUR_TARGET := $(notdir $(shell pwd))
 

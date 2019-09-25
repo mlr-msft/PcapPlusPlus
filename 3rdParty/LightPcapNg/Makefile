@@ -8,10 +8,10 @@ SOURCES := $(wildcard LightPcapNg/src/*.c)
 OBJS_FILENAMES := $(patsubst LightPcapNg/src/%.c,Obj/%.o,$(SOURCES))
 
 INCLUDES := -I"LightPcapNg/include"
-			
+
 Obj/%.o: LightPcapNg/src/%.c
 	@echo 'Building file: $<'
-	@$(CC) $(INCLUDES) -Wall -O2 -DUNIVERSAL -g -c -o "$@" "$<"
+	@$(CC) $(INCLUDES) -Wall -O2 -DUNIVERSAL -g -c -o "$@" $(PCAPPP_EXTRA_CFLAGS) "$<"
 
 CUR_TARGET := $(notdir $(shell pwd))
 
